@@ -1,26 +1,150 @@
 @import "tailwindcss";
 
+/* Design System CSS Variables - Zeen.pk */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary Colors */
+  --background: hsl(40 25% 97%);        /* off-white #faf8f4 */
+  --foreground: hsl(20 45% 7%);         /* deep ink #1a1208 */
+  --accent: hsl(35 48% 55%);            /* clay gold #c8a96e */
+  --muted: hsl(25 16% 48%);             /* muted #7a6e60 */
+  --surface: hsl(40 50% 96%);           /* clay light #f5edd8 */
+  --border: hsl(35 35% 90%);            /* border #e8dece */
 }
 
+.dark {
+  --background: hsl(20 45% 7%);
+  --foreground: hsl(40 25% 97%);
+  --accent: hsl(35 48% 55%);
+  --muted: hsl(25 16% 48%);
+  --surface: hsl(25 16% 12%);
+  --border: hsl(25 16% 20%);
+}
+
+/* Map CSS variables to Tailwind utilities */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-success: hsl(142.1 76.2% 36.3%);
+  --font-cormorant: 'Cormorant Garamond', serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-cormorant);
+  }
+
+  h1 {
+    @apply text-4xl font-bold tracking-tight md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl font-bold md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  a {
+    @apply text-accent hover:text-accent/90 transition-colors;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utility styles */
+@layer utilities {
+  .font-cormorant {
+    font-family: var(--font-cormorant);
+  }
+
+  .text-accent-italic {
+    @apply italic text-accent font-cormorant;
+  }
+
+  .btn-primary {
+    @apply bg-foreground text-background px-6 py-3 rounded-none transition-all hover:bg-muted;
+  }
+
+  .btn-secondary {
+    @apply border border-foreground text-foreground px-6 py-3 rounded-none transition-all hover:bg-foreground/10;
+  }
+
+  .container-tight {
+    @apply max-w-6xl mx-auto px-4 md:px-6;
+  }
+
+  .marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .pattern-diagonal {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 0, 0, 0.03) 10px,
+      rgba(0, 0, 0, 0.03) 20px
+    );
+  }
+
+  .aspect-3-4 {
+    @apply aspect-[3/4];
+  }
+
+  .safe-area {
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-25% - 2rem));
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll 20s linear infinite;
+  }
 }

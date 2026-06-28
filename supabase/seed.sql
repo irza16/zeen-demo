@@ -12,7 +12,7 @@ VALUES
     'New',
     'bg-amber-100',
         true,
-        'https://images.unsplash.com/photo-VshbFm-cBeo?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/noor/600/800'
       ),
   (
     'Gulnaar',
@@ -25,7 +25,7 @@ VALUES
     'Sale',
     'bg-rose-100',
         true,
-        'https://images.unsplash.com/photo-gXM7pt3zu1k?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/gulnaar/600/800'
       ),
   (
     'Safa',
@@ -38,7 +38,7 @@ VALUES
     NULL,
     'bg-cyan-50',
         true,
-        'https://images.unsplash.com/photo-rJirD6eI26I?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/safa/600/800'
       ),
   (
     'Rania',
@@ -51,7 +51,7 @@ VALUES
     'New',
     'bg-emerald-100',
         true,
-        'https://images.unsplash.com/photo-zWaiJcc0WAc?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/rania/600/800'
       ),
   (
     'Zara',
@@ -64,7 +64,7 @@ VALUES
     'Eid',
     'bg-purple-100',
         true,
-        'https://images.unsplash.com/photo-FY21-EeURdQ?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/zara/600/800'
       ),
   (
     'Mehmal',
@@ -77,7 +77,7 @@ VALUES
     'Sale',
     'bg-fuchsia-100',
         true,
-        'https://images.unsplash.com/photo-aBdtyKmjs7c?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/mehmal/600/800'
       ),
   (
     'Aiza',
@@ -90,7 +90,7 @@ VALUES
     NULL,
     'bg-slate-100',
         true,
-        'https://images.unsplash.com/photo-QXRL6XkxYNk?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/aiza/600/800'
       ),
   (
     'Kashf',
@@ -103,5 +103,5 @@ VALUES
     NULL,
     'bg-gray-100',
         true,
-        'https://images.unsplash.com/photo-O3YKa1jtcYg?auto=format&fit=crop&w=600&h=800&q=80'
+        'https://picsum.photos/seed/kashf/600/800'
       );

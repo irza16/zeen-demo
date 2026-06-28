@@ -1,0 +1,107 @@
+-- Insert sample products
+INSERT INTO products (name, slug, category, price, original_price, description, sizes, badge, bg_color, in_stock, image_url)
+VALUES
+  (
+    'Noor',
+    'noor',
+    'Festive',
+    5500,
+    NULL,
+    'Exquisite hand-embroidered festive collection. Pure cotton with intricate threadwork and embellishments perfect for Eid celebrations.',
+    '{XS,S,M,L,XL,XXL}',
+    'New',
+    'bg-amber-100',
+        true,
+        'https://images.unsplash.com/photo-VshbFm-cBeo?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Gulnaar',
+    'gulnaar',
+    'Festive',
+    6800,
+    7800,
+    'Luxurious silk-blend with delicate floral embroidery. A timeless piece featuring traditional motifs in vibrant colours.',
+    '{S,M,L,XL}',
+    'Sale',
+    'bg-rose-100',
+        true,
+        'https://images.unsplash.com/photo-gXM7pt3zu1k?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Safa',
+    'safa',
+    'Lawn',
+    2100,
+    NULL,
+    'Lightweight lawn print perfect for spring mornings. Breathable fabric with contemporary geometric patterns.',
+    '{XS,S,M,L,XL,XXL}',
+    NULL,
+    'bg-cyan-50',
+        true,
+        'https://images.unsplash.com/photo-rJirD6eI26I?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Rania',
+    'rania',
+    'Lawn',
+    1800,
+    NULL,
+    'Versatile everyday lawn wear. Soft, printed design ideal for casual outings and comfortable daily wear.',
+    '{S,M,L,XL}',
+    'New',
+    'bg-emerald-100',
+        true,
+        'https://images.unsplash.com/photo-zWaiJcc0WAc?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Zara',
+    'zara',
+    'Formal',
+    8500,
+    NULL,
+    'Premium formal wear crafted from premium cotton silk. Sophisticated embroidery for weddings and special occasions.',
+    '{XS,S,M,L,XL}',
+    'Eid',
+    'bg-purple-100',
+        true,
+        'https://images.unsplash.com/photo-FY21-EeURdQ?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Mehmal',
+    'mehmal',
+    'Formal',
+    9200,
+    10500,
+    'Statement formal piece with intricate zardozi and pearl work. Hand-crafted for the discerning bride.',
+    '{S,M,L}',
+    'Sale',
+    'bg-fuchsia-100',
+        true,
+        'https://images.unsplash.com/photo-aBdtyKmjs7c?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Aiza',
+    'aiza',
+    'Basics',
+    1500,
+    NULL,
+    'Essential basics collection. Premium cotton essentials for everyday wear, perfect for layering.',
+    '{XS,S,M,L,XL,XXL}',
+    NULL,
+    'bg-slate-100',
+        true,
+        'https://images.unsplash.com/photo-QXRL6XkxYNk?auto=format&fit=crop&w=600&h=800&q=80'
+      ),
+  (
+    'Kashf',
+    'kashf',
+    'Basics',
+    1200,
+    NULL,
+    'Comfortable basics in classic designs. Versatile and timeless pieces for your wardrobe staples.',
+    '{S,M,L,XL,XXL}',
+    NULL,
+    'bg-gray-100',
+        true,
+        'https://images.unsplash.com/photo-O3YKa1jtcYg?auto=format&fit=crop&w=600&h=800&q=80'
+      );

@@ -1,24 +1,22 @@
-'use client';
-
 export default function MarqueeBar() {
   const messages = [
-    '✓ Free Shipping on Orders Over PKR 5,000',
-    '✓ 14-Day Returns on All Items',
-    '✓ Secure Payment Options',
-    '✓ WhatsApp Support',
+    'Free Shipping on Preorders 💗',
+    'New Drop Every Friday ✨',
+    'Limited Pieces Only 🌸',
+    'Easy Exchange',
+    'Made in Pakistan 🇵🇰',
   ];
 
   return (
-    <div className="bg-foreground text-surface overflow-hidden py-3 md:py-4">
-      <div className="flex animate-scroll gap-8 md:gap-12 whitespace-nowrap">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="flex gap-8 md:gap-12">
-            {messages.map((msg, idx) => (
-              <span key={idx} className="text-xs md:text-sm font-medium inline-block">
-                {msg}
-              </span>
-            ))}
-          </div>
+    <div className="overflow-hidden border-y border-border bg-blush/75 py-3 text-rose">
+      <div className="marquee-track flex w-max items-center gap-8 whitespace-nowrap px-4">
+        {[...messages, ...messages].map((message, index) => (
+          <span
+            key={`${message}-${index}`}
+            className="text-xs font-medium uppercase tracking-[0.28em] sm:text-sm"
+          >
+            {message}
+          </span>
         ))}
       </div>
     </div>

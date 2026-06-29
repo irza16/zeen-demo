@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Product } from '@/lib/types';
 import OrderForm from '@/components/OrderForm';
+import { getProductImageUrl } from '@/lib/product-images';
 
 interface ProductDetailWrapperProps {
   product: Product;
@@ -14,134 +15,113 @@ export default function ProductDetailWrapper({
 }: ProductDetailWrapperProps) {
   const [isOrderFormOpen, setIsOrderFormOpen] = useState(false);
   const isSale = product.original_price !== null;
+  const imageUrl = getProductImageUrl(product);
 
   return (
     <>
-      {/* Product Detail */}
-      <section className="flex-1">
-        <div className="container-tight py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-24">
-            {/* Product Image */}
-            <div>
-              {product.image_url ? (
-                <div className="aspect-3-4 w-full relative overflow-hidden bg-surface">
+      <section className="section-shell">
+        <div className="container-page">
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
+            <div className="relative">
+              <div className="card-soft overflow-hidden">
+                {imageUrl ? (
                   <img
-                    src={product.image_url}
+                    src={imageUrl}
                     alt={product.name}
-                    className="object-cover w-full h-full"
+                    className="aspect-[3/4] h-full w-full object-cover"
                     loading="eager"
                     fetchPriority="high"
-                    width={600}
-                    height={800}
+                    width={900}
+                    height={1200}
                     decoding="async"
                     onError={(e) => {
-                      // fallback to background color if image fails
                       (e.currentTarget as HTMLImageElement).style.display = 'none';
                     }}
                   />
+                ) : (
+                  <div
+                    className={`${product.bg_color} flex aspect-[3/4] items-center justify-center px-4`}
+                    aria-label={`${product.name} product image`}
+                  >
+                    <p className="font-display text-center text-3xl italic text-ink/60">
+                      {product.name}
+                    </p>
+                  </div>
+                )}
 
-                  {product.badge && (
-                    <div className="absolute top-6 left-6 bg-foreground text-background px-4 py-2 text-sm font-medium">
-                      {product.badge}
-                    </div>
-                  )}
+                <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-medium uppercase tracking-[0.24em] text-ink shadow-sm">
+                  {product.badge ?? 'Drop'}
                 </div>
-              ) : (
-                <div
-                  className={`${product.bg_color} aspect-3-4 w-full flex items-center justify-center relative`}
-                  aria-label={`${product.name} product image`}
-                >
-                  <p className="text-center font-cormorant italic text-foreground/60 text-2xl md:text-3xl px-4">
-                    {product.name}
-                  </p>
-
-                  {product.badge && (
-                    <div className="absolute top-6 left-6 bg-foreground text-background px-4 py-2 text-sm font-medium">
-                      {product.badge}
-                    </div>
-                  )}
-                </div>
-              )}
+              </div>
             </div>
 
-            {/* Product Info */}
             <div className="flex flex-col justify-center">
-              <p className="text-xs md:text-sm text-accent uppercase tracking-widest mb-4">
+              <p className="pill-soft w-fit border-rose/25 bg-blush/70 text-rose">
                 {product.category}
               </p>
 
-              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              <h1 className="mt-5 text-[clamp(2.8rem,6vw,4.8rem)] leading-[0.92] text-ink">
                 {product.name}
               </h1>
 
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl md:text-3xl font-bold text-foreground">
+              <div className="mt-5 flex flex-wrap items-end gap-3">
+                <span className="font-display text-3xl text-ink">
                   PKR {product.price.toLocaleString()}
                 </span>
                 {isSale && (
-                  <span className="text-lg md:text-xl text-muted line-through">
+                  <span className="text-lg text-muted line-through">
                     PKR {product.original_price?.toLocaleString()}
                   </span>
                 )}
               </div>
 
-              <p className="text-base md:text-lg text-muted mb-8 leading-relaxed">
-                {product.description}
-              </p>
+              <p className="mt-6 max-w-xl text-base text-muted">{product.description}</p>
 
-              {/* Sizes */}
-              <div className="mb-8">
-                <p className="text-sm font-medium mb-4 text-foreground">Available Sizes</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="mt-8">
+                <p className="text-sm font-medium uppercase tracking-[0.24em] text-ink">
+                  Available Sizes
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
                   {product.sizes.map((size) => (
-                    <div
+                    <span
                       key={size}
-                      className="border border-border bg-surface px-4 py-2 text-sm"
+                      className="rounded-full border border-border bg-white/70 px-4 py-2 text-sm text-ink"
                     >
                       {size}
-                    </div>
+                    </span>
                   ))}
                 </div>
               </div>
 
-              {/* CTA */}
-              <button
-                onClick={() => setIsOrderFormOpen(true)}
-                className="btn-primary w-full md:w-fit text-center mb-8"
-              >
-                Order Now
-              </button>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setIsOrderFormOpen(true)}
+                  className="focus-ring inline-flex items-center justify-center rounded-full bg-rose px-6 py-3.5 text-sm font-medium text-white shadow-[0_16px_32px_rgba(201,133,106,0.28)]"
+                >
+                  Order Now
+                </button>
+                <div className="pill-soft border-rose/20 bg-white/80 text-muted">
+                  WhatsApp confirmation within 2 hours
+                </div>
+              </div>
 
-              {/* Info */}
-              <div className="space-y-3 border-t border-border pt-8">
-                <div className="flex gap-4">
-                  <span className="text-2xl">🚚</span>
-                  <div>
-                    <p className="font-medium text-foreground">Fast Delivery</p>
-                    <p className="text-sm text-muted">Across Pakistan</p>
+              <div className="mt-10 grid gap-3 border-t border-border pt-8 sm:grid-cols-3">
+                {[
+                  ['Fast Delivery', 'Across Pakistan'],
+                  ['14-Day Returns', 'Easy exchange policy'],
+                  ['Secure Checkout', 'COD, EasyPaisa & JazzCash'],
+                ].map(([title, copy]) => (
+                  <div key={title} className="rounded-[16px] border border-border bg-white/70 p-4">
+                    <p className="font-medium text-ink">{title}</p>
+                    <p className="mt-1 text-sm text-muted">{copy}</p>
                   </div>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-2xl">↩️</span>
-                  <div>
-                    <p className="font-medium text-foreground">14-Day Returns</p>
-                    <p className="text-sm text-muted">Hassle-free exchange</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <span className="text-2xl">💬</span>
-                  <div>
-                    <p className="font-medium text-foreground">WhatsApp Support</p>
-                    <p className="text-sm text-muted">Within 2 hours confirmation</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Order Form Modal */}
       <OrderForm
         product={product}
         isOpen={isOrderFormOpen}

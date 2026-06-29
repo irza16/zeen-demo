@@ -1,28 +1,30 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Inter } from 'next/font/google';
+import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-cormorant',
-  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal', 'italic'],
 });
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-body',
+  display: 'swap',
+  weight: ['400', '500', '700'],
 });
 
 export const metadata: Metadata = {
-  title: 'Zeen.pk - Pakistani Women Fashion',
-  description: 'Luxury Pakistani women\'s clothing. Handcrafted embroidery meets contemporary silhouettes.',
+  title: 'Aesco.pk - Dreamy Pakistani Fusion Fashion',
+  description: 'A soft, editorial Pakistani fashion demo store from Aesco for dreamy traditional and fusion looks.',
 };
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -32,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`${cormorant.variable} ${inter.variable} antialiased`}>
+      <body suppressHydrationWarning className={`${playfair.variable} ${dmSans.variable} antialiased`}>
         {children}
       </body>
     </html>

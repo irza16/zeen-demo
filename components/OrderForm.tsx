@@ -97,32 +97,24 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
 
   return (
     <>
-      {/* Backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-foreground/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 z-40 bg-ink/45 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal - Drawer on mobile, centered on desktop */}
-      <div className="fixed z-50 inset-0 flex items-center justify-center pointer-events-none">
-        <div className="pointer-events-auto w-full h-full md:w-auto md:h-auto md:max-w-md bg-background md:rounded-none shadow-lg md:shadow-2xl overflow-y-auto max-h-screen md:max-h-none">
-          {/* Header */}
-          <div className="sticky top-0 z-10 bg-background border-b border-border px-6 py-4 md:py-6 flex items-center justify-between">
-            <h2 className="text-xl md:text-2xl font-bold text-foreground">
+      <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4">
+        <div className="pointer-events-auto max-h-[92dvh] w-full overflow-y-auto rounded-t-[28px] border border-border bg-cream shadow-[0_24px_70px_rgba(28,20,16,0.2)] sm:max-w-xl sm:rounded-[32px]">
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-cream/95 px-5 py-4 backdrop-blur-xl sm:px-6">
+            <h2 className="font-display text-2xl text-ink">
               Order {product.name}
             </h2>
             <button
               onClick={onClose}
-              className="text-muted hover:text-foreground transition-colors"
+              className="focus-ring flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white/70 text-ink transition-transform duration-300 hover:scale-[1.03]"
               aria-label="Close order form"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -133,20 +125,18 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
             </button>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 px-5 py-6 sm:px-6 sm:py-8">
             {error && (
               <div
-                className="bg-destructive/10 border border-destructive/30 text-destructive text-sm p-4 rounded-sm"
+                className="rounded-[16px] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive"
                 role="alert"
               >
                 {error}
               </div>
             )}
 
-            {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
+              <label htmlFor="name" className="mb-2 block text-sm font-medium text-ink">
                 Your Name
               </label>
               <input
@@ -156,14 +146,13 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Fatima Ahmed"
-                className="w-full border border-border bg-surface px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                className="focus-ring w-full rounded-[14px] border border-border bg-white/80 px-4 py-3 text-ink placeholder:text-muted"
                 required
               />
             </div>
 
-            {/* Phone */}
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium mb-2">
+              <label htmlFor="phone" className="mb-2 block text-sm font-medium text-ink">
                 WhatsApp Number
               </label>
               <input
@@ -173,17 +162,16 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="03XX-XXXXXXX"
-                className="w-full border border-border bg-surface px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                className="focus-ring w-full rounded-[14px] border border-border bg-white/80 px-4 py-3 text-ink placeholder:text-muted"
                 required
               />
-              <p className="text-xs text-muted mt-1">
+              <p className="mt-1 text-xs text-muted">
                 Format: 03XX-XXXXXXX (Pakistani numbers only)
               </p>
             </div>
 
-            {/* City */}
             <div>
-              <label htmlFor="city" className="block text-sm font-medium mb-2">
+              <label htmlFor="city" className="mb-2 block text-sm font-medium text-ink">
                 City
               </label>
               <input
@@ -193,24 +181,23 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                 value={formData.city}
                 onChange={handleInputChange}
                 placeholder="Karachi"
-                className="w-full border border-border bg-surface px-4 py-3 text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                className="focus-ring w-full rounded-[14px] border border-border bg-white/80 px-4 py-3 text-ink placeholder:text-muted"
                 required
               />
             </div>
 
-            {/* Size Selector */}
             <div>
-              <label className="block text-sm font-medium mb-3">Size</label>
-              <div className="grid grid-cols-3 gap-2">
+              <label className="mb-3 block text-sm font-medium text-ink">Size</label>
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
                 {product.sizes.map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => handleSizeSelect(size)}
-                    className={`py-2 border font-medium text-sm transition-colors ${
+                    className={`focus-ring rounded-full border px-3 py-2 text-sm font-medium transition-colors ${
                       formData.size === size
-                        ? 'bg-accent border-accent text-background'
-                        : 'border-border bg-surface text-foreground hover:border-accent'
+                        ? 'border-rose bg-rose text-white'
+                        : 'border-border bg-white/80 text-ink hover:border-rose/50'
                     }`}
                   >
                     {size}
@@ -219,12 +206,11 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
               </div>
             </div>
 
-            {/* Quantity */}
             <div>
-              <label htmlFor="quantity" className="block text-sm font-medium mb-2">
+              <label htmlFor="quantity" className="mb-2 block text-sm font-medium text-ink">
                 Quantity
               </label>
-              <div className="flex items-center gap-3 border border-border bg-surface w-fit">
+              <div className="flex w-fit items-center gap-3 rounded-full border border-border bg-white/80">
                 <button
                   type="button"
                   onClick={() =>
@@ -233,11 +219,11 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                       quantity: Math.max(1, prev.quantity - 1),
                     }))
                   }
-                  className="px-3 py-2 hover:bg-muted transition-colors"
+                  className="rounded-full px-4 py-2 transition-colors hover:bg-blush/60"
                 >
                   −
                 </button>
-                <span className="px-3 py-2 font-medium">{formData.quantity}</span>
+                <span className="px-3 py-2 font-medium text-ink">{formData.quantity}</span>
                 <button
                   type="button"
                   onClick={() =>
@@ -246,16 +232,15 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                       quantity: Math.min(5, prev.quantity + 1),
                     }))
                   }
-                  className="px-3 py-2 hover:bg-muted transition-colors"
+                  className="rounded-full px-4 py-2 transition-colors hover:bg-blush/60"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            {/* Payment Method */}
             <div>
-              <label className="block text-sm font-medium mb-3">
+              <label className="mb-3 block text-sm font-medium text-ink">
                 Payment Method
               </label>
               <div className="space-y-2">
@@ -265,10 +250,10 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                       key={method}
                       type="button"
                       onClick={() => handlePaymentSelect(method)}
-                      className={`w-full p-3 border text-sm font-medium transition-colors text-left ${
+                      className={`w-full rounded-[16px] border p-3 text-left text-sm font-medium transition-colors ${
                         formData.paymentMethod === method
-                          ? 'bg-accent border-accent text-background'
-                          : 'border-border bg-surface text-foreground hover:border-accent'
+                          ? 'border-rose bg-rose/10 text-ink'
+                          : 'border-border bg-white/80 text-ink hover:border-rose/50'
                       }`}
                     >
                       {method}
@@ -278,8 +263,7 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
               </div>
             </div>
 
-            {/* Price Summary */}
-            <div className="border-t border-border pt-4">
+            <div className="rounded-[20px] border border-border bg-white/70 p-4">
               <div className="flex justify-between mb-2">
                 <span className="text-muted">Price</span>
                 <span className="font-medium">
@@ -291,25 +275,23 @@ export default function OrderForm({ product, isOpen, onClose }: OrderFormProps) 
                 <span className="font-medium">{formData.quantity}</span>
               </div>
               <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
+                <span className="text-ink">Total</span>
                 <span>
                   PKR {(product.price * formData.quantity).toLocaleString()}
                 </span>
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="btn-primary w-full text-center disabled:opacity-60 disabled:cursor-not-allowed"
+              className="focus-ring w-full rounded-full bg-rose px-6 py-4 text-center text-sm font-medium text-white shadow-[0_16px_32px_rgba(201,133,106,0.28)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? 'Placing Order...' : 'Place Order'}
             </button>
 
-            {/* Info Text */}
-            <p className="text-xs text-muted text-center">
-              We'll contact you on WhatsApp within 2 hours to confirm your order.
+            <p className="text-center text-xs text-muted">
+              We&apos;ll contact you on WhatsApp within 2 hours to confirm your order.
             </p>
           </form>
         </div>

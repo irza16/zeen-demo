@@ -10,35 +10,35 @@ interface ProductsPageProps {
 }
 
 async function ProductsContent({ category }: { category?: string }) {
+  let products = [];
+
   try {
-    const products = await getProducts(category);
-
-    if (products.length === 0) {
-      return (
-        <div className="py-24 text-center">
-          <h2 className="text-2xl font-semibold text-foreground mb-2">
-            No products found
-          </h2>
-          <p className="text-muted">Try a different category.</p>
-        </div>
-      );
-    }
-
-    const categoryName =
-      category && category !== 'All'
-        ? category === 'Sale'
-          ? 'Sale Items'
-          : category
-        : 'All Products';
-
-    return <ProductGrid products={products} title={categoryName} />;
-  } catch (error) {
+    products = await getProducts(category);
+  } catch {
     return (
-      <div className="py-24 text-center">
-        <p className="text-muted">Unable to load products. Please try again later.</p>
+      <div className="container-page py-24 text-center text-muted">
+        Unable to load products. Please try again later.
       </div>
     );
   }
+
+  if (products.length === 0) {
+    return (
+      <div className="container-page py-24 text-center">
+        <h2 className="mb-2 text-2xl font-semibold text-ink">No products found</h2>
+        <p className="text-muted">Try a different category.</p>
+      </div>
+    );
+  }
+
+  const categoryName =
+    category && category !== 'All'
+      ? category === 'Sale'
+        ? 'Sale Items'
+        : category
+      : 'All Products';
+
+  return <ProductGrid products={products} title={categoryName} />;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {

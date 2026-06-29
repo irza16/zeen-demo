@@ -1,4 +1,4 @@
-# Zeen.pk E-Commerce Store - Complete Build Summary
+# Aesco.pk E-Commerce Store - Complete Build Summary
 
 ## ✅ Project Built Successfully
 
@@ -191,7 +191,7 @@ Visit: http://localhost:3000
 
 ```bash
 git add .
-git commit -m "Initial Zeen.pk e-commerce store"
+git commit -m "Initial Aesco.pk e-commerce store"
 git push
 ```
 
@@ -335,4 +335,4 @@ Refer to the skill guides loaded:
 - **Tailwind v4 + shadcn**: CSS theming and component patterns
 - **UI/UX Pro Max**: Design system and interaction guidelines
 
-Good luck with Zeen.pk! 🇵🇰✨
+Good luck with Aesco.pk! 🇵🇰✨

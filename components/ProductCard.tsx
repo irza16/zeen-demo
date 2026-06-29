@@ -2,119 +2,107 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { Product } from '@/lib/types';
+import { getProductImageUrl } from '@/lib/product-images';
 import OrderForm from './OrderForm';
 
 interface ProductCardProps {
   product: Product;
   eager?: boolean;
+  stockCount?: number;
+  className?: string;
 }
 
-export default function ProductCard({ product, eager = false }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  eager = false,
+  stockCount = 3,
+  className,
+}: ProductCardProps) {
   const [isOrderFormOpen, setIsOrderFormOpen] = useState(false);
-  const [showFallback, setShowFallback] = useState(false);
-  const isSale = product.original_price !== null;
 
-  const handleAddToBag = (e: React.MouseEvent) => {
-    // Prevent Link navigation when clicking the button
-    e.stopPropagation();
+  const badgeLabel = !product.in_stock ? 'Sold Out' : product.badge === 'New' ? 'New' : 'Drop';
+
+  const openOrderForm = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsOrderFormOpen(true);
   };
 
   return (
     <>
-      <Link href={`/products/${product.slug}`} className="block">
-        <article className="flex flex-col h-full">
-          {/* Product Image */}
-          <div className="relative group mb-4">
-            {product.image_url && !showFallback ? (
-              <div className="aspect-3-4 w-full relative overflow-hidden bg-surface">
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="object-cover w-full h-full"
-                  loading={eager ? 'eager' : 'lazy'}
-                  fetchPriority={eager ? 'high' : undefined}
-                  width={600}
-                  height={800}
-                  decoding="async"
-                  onError={() => setShowFallback(true)}
-                />
-
-                {/* Badge */}
-                {product.badge && (
-                  <div className="absolute top-3 left-3 bg-foreground text-background px-3 py-1 text-xs font-medium">
-                    {product.badge}
-                  </div>
-                )}
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-foreground/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button
-                    onClick={handleAddToBag}
-                    className="btn-primary text-sm md:text-base"
-                    aria-label={`Add ${product.name} to bag`}
-                  >
-                    Add to Bag
-                  </button>
-                </div>
-              </div>
+      <Link href={`/products/${product.slug}`} className={`group block ${className ?? ''}`}>
+        <article className="card-soft flex h-full flex-col overflow-hidden transition-transform duration-300 hover:scale-[1.03]">
+          <div className="relative aspect-[3/4] overflow-hidden bg-blush/40">
+            {getProductImageUrl(product) ? (
+              <img
+                src={getProductImageUrl(product)}
+                alt={product.name}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading={eager ? 'eager' : 'lazy'}
+                fetchPriority={eager ? 'high' : undefined}
+                width={600}
+                height={800}
+                decoding="async"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
+              />
             ) : (
               <div
-                className={`${product.bg_color} aspect-3-4 w-full flex items-center justify-center relative overflow-hidden`}
+                className={`${product.bg_color} flex h-full w-full items-center justify-center px-4`}
                 aria-label={`${product.name} product image`}
               >
-                <p className="text-center font-cormorant italic text-foreground/60 text-lg md:text-xl px-4">
+                <p className="font-display text-center text-2xl italic text-ink/60">
                   {product.name}
                 </p>
-
-                {/* Badge */}
-                {product.badge && (
-                  <div className="absolute top-3 left-3 bg-foreground text-background px-3 py-1 text-xs font-medium">
-                    {product.badge}
-                  </div>
-                )}
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-foreground/85 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button
-                    onClick={handleAddToBag}
-                    className="btn-primary text-sm md:text-base"
-                    aria-label={`Add ${product.name} to bag`}
-                  >
-                    Add to Bag
-                  </button>
-                </div>
               </div>
             )}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+            <div className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.25em] text-ink shadow-sm">
+              {badgeLabel}
+            </div>
+
+            <div className="absolute inset-x-3 bottom-3 translate-y-5 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              <button
+                type="button"
+                onClick={openOrderForm}
+                className="focus-ring flex w-full items-center justify-center gap-2 rounded-full bg-rose px-4 py-3 text-sm font-medium text-white shadow-[0_14px_28px_rgba(201,133,106,0.28)]"
+                aria-label={`Quick order ${product.name}`}
+              >
+                Quick Order <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
 
-          {/* Product Info */}
-          <div className="flex-1">
-            <h3 className="font-cormorant text-lg md:text-xl mb-2 text-foreground">
-              {product.name}
-            </h3>
+          <div className="flex flex-1 flex-col gap-3 px-4 py-4">
+            <div className="space-y-1">
+              <h3 className="font-display text-xl italic leading-tight text-ink">
+                {product.name}
+              </h3>
+              <p className="text-xs uppercase tracking-[0.22em] text-muted">
+                {product.category}
+              </p>
+            </div>
 
-            <p className="text-xs md:text-sm text-muted mb-3">
-              {product.category} · {product.sizes?.join(', ')}
-            </p>
-
-            <div className="flex items-center gap-2">
-              <span className={`text-base md:text-lg font-semibold text-foreground`}>
-                PKR {product.price.toLocaleString()}
+            <div className="mt-auto flex items-end justify-between gap-3">
+              <div>
+                <p className="text-lg font-semibold text-ink">
+                  PKR {product.price.toLocaleString()}
+                </p>
+                <p className="text-sm text-rose">🔥 {product.in_stock ? stockCount : 0} left</p>
+              </div>
+              <span className="text-xs font-medium uppercase tracking-[0.24em] text-muted">
+                View
               </span>
-              {isSale && (
-                <span className="text-xs md:text-sm text-muted line-through">
-                  PKR {product.original_price?.toLocaleString()}
-                </span>
-              )}
             </div>
           </div>
         </article>
       </Link>
 
-      {/* Order Form Modal */}
       <OrderForm
         product={product}
         isOpen={isOrderFormOpen}
